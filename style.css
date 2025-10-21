@@ -66,4 +66,6 @@ body{
   animation-delay: 0.3s;
 }
 
-
+#secondaryInfoText {
+  animation-delay: 0.5s;
+}
