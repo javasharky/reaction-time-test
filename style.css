@@ -57,9 +57,10 @@ body{
     transform: translateY(0);
   }
 }
-#bolt, #secondaryInfoText {
+#secondaryInfoText {
   animation: floatUp 1.2s ease-out 0s 1 normal forwards;
 }
 #infoText {
   animation: floatUp 1.2s ease-out 0.3s 1 normal forwards;
 }
+
