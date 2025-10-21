@@ -1,0 +1,49 @@
+#reactionTimeTestButton{
+  background: rgb(49, 154, 189);
+  width: auto;
+  height: 300px;
+  margin: 30px 10px;
+  border-style: solid;
+  border-width: 10px;
+  border-radius: 5px;
+  border-color: lightgray;
+  cursor: pointer;
+  transition: background-color 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-direction: column;
+}
+#infoText{
+color: white;
+text-align: center;
+font-weight: bold;
+font-size: 30px;
+font-family: Verdana;
+}
+#secondaryInfoText{
+color: white;
+text-align: center;
+font-weight: 600;
+font-size: 25px;
+font-family: Verdana;
+}
+#recordDisplay{
+color: white;
+text-align: center;
+font-weight: 400;
+font-size: 15px;
+font-family: Verdana;
+}
+#bolt{
+  color: white;
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+body{
+  background: black;
+}
+* {
+  user-select: none;
+}

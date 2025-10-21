@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+    <head><script src="https://kit.fontawesome.com/3c584956ba.js" crossorigin="anonymous">
+       window.FontAwesomeConfig = { observeMutations: true };
+    </script></head>
+    <link rel="stylesheet" href="ReactionTimeTest.css">
+    <div id="reactionTimeTestButton">
+    <i id="bolt" class="fa-solid fa-clock"></i>
+    <p id="infoText">Press to start reaction time test.</p>
+    </div>
+    <p id="secondaryInfoText"></p>
+    <p id="recordDisplay">----</p>
+
+    <script>
+      var buttonState = "idle";
+      var lastReady;
+      var result;
+      var resultRaw;
+      var testId = 0;
+      function displayRecord(){
+      document.getElementById("recordDisplay").textContent = `~ Record: ${getRecord()||"N/A"} ms ~`
+      }
+      function setRecord(value,display){
+        if(display){document.getElementById("recordDisplay").textContent = `NEW Record!: ${String(value)} ms`}
+        localStorage.setItem("record",value)
+      }
+      function getRecord(){
+        return Number(localStorage.getItem("record"))||null
+      }
+      function cancelTest(){
+        document.getElementById("reactionTimeTestButton").style.backgroundColor = "rgb(49, 154, 189)"
+        buttonState = "idle"
+      }
+      function initializeTest(){
+        testId++;
+        document.getElementById("bolt").className = "fa-solid fa-hourglass-half"
+        const delay = Math.floor(Math.random()*(15000-4000)+4000)
+        document.getElementById("reactionTimeTestButton").style.backgroundColor = "red"
+        document.getElementById("infoText").textContent = "Wait for button to turn green."
+        buttonState = "waiting"
+        const id = testId
+        setTimeout(()=>{
+        if(buttonState === "waiting"&& id === testId ){
+        document.getElementById("reactionTimeTestButton").style.backgroundColor = "lime"
+        document.getElementById("infoText").textContent = "Click!"
+        buttonState = "ready"
+        lastReady = Date.now()
+      }},delay)
+      }
+      function onButtonPrompted(){
+        if (buttonState === "idle"){
+          displayRecord()
+          initializeTest()
+          document.getElementById("secondaryInfoText").textContent = ``
+        }
+        else if (buttonState === "waiting"){
+          document.getElementById("bolt").className = "fa-solid fa-hand"
+          displayRecord()
+          cancelTest()
+          document.getElementById("infoText").textContent = "Test halted! Press to re-start test."
+          document.getElementById("secondaryInfoText").textContent = `You clicked too soon! Press to restart the test.`
+        }
+        else if (buttonState === "ready"){
+          document.getElementById("bolt").className = "fa-solid fa-bolt"
+          displayRecord()
+          cancelTest()
+          resultRaw = Date.now() - lastReady
+          result = Math.max(resultRaw - 50, 0)
+          document.getElementById("reactionTimeTestButton").style.backgroundColor = "rgb(189, 49, 189)"
+          document.getElementById("infoText").textContent = `
+          You reacted in ${result} milliseconds (${(result/1000).toFixed(2)} seconds)`
+          document.getElementById("secondaryInfoText").textContent = `Click the purple button to retake the test.`
+          if(result < getRecord() || !getRecord()){
+            setRecord(result,true)
+          }
+        }
+      }
+      document.getElementById("recordDisplay").textContent = `~ Record: ${getRecord()||"N/A"} ms ~`
+      document.getElementById("reactionTimeTestButton").onclick = 
+      function(){
+      onButtonPrompted()
+      }
+      document.addEventListener("keydown",a=>{if (a.key === " "){
+      a.preventDefault()
+      onButtonPrompted()
+      }})
+    </script>
