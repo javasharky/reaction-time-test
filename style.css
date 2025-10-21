@@ -59,9 +59,10 @@ body{
 }
 
 #bolt, #infoText, #secondaryInfoText {
-  animation: floatUp 1.2s ease-out 0s 1 forwards;
+  animation: floatUp 1.2s ease-out 0s linear 1;
 }
 
 #infoText {
   animation-delay: 0.3s;
 }
+
